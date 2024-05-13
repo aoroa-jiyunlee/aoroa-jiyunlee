@@ -8,20 +8,16 @@ import (
 
 func PromptInt(req string) int {
 	reader := bufio.NewReader(os.Stdin)
-	writer := bufio.NewWriter(os.Stdout)
-
-	defer writer.Flush()
 
 	var input int
 	for {
 		fmt.Print(req)
-		fmt.Fscanln(reader, &input)
-
-		if input != 0 {
-			break
-		} else {
+		if _, err := fmt.Fscanln(reader, &input); err != nil {
 			fmt.Print("입력값을 확인해주세요. ")
 			reader.ReadString('\n')
+		}
+		if input != 0 {
+			break
 		}
 	}
 	return input
